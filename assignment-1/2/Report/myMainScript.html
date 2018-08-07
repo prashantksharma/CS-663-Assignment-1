@@ -1,0 +1,291 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Question 2 Gray Level Transformations</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-08-07"><meta name="DC.source" content="myMainScript.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Question 2 Gray Level Transformations</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Linear Contrast Stretching</a></li><li><a href="#3">Histogram Equalization</a></li><li><a href="#4">Histogram Matching</a></li><li><a href="#5">Adaptive Histogram Equilization</a></li><li><a href="#6">Contrast Limited Adaptive Histogram Equilization</a></li></ul></div><h2 id="1">Linear Contrast Stretching</h2><p>The function myLinearContrastStretching(fname, path) implements contrast stretching by stretching the histogram of  image over 0 to 255.</p><p>Both single channel ( Grayscale ) and three channel ( RGB ) images can be given as input image.</p><p>*The transformation function for each pixel is as follows: *</p><pre>newValue = [(oldValue - minValue)/(maxValue - minValue) ]*255</pre><p><b>Observations</b> For Linear Contrast Strectching, if pixel values of image contains 0 and 255, then apllication of above function has no effect, because the denominator becomes 255 and we are multiplying by 255. Thus, its canceled. In such cases Linear Contrast Streching is ineffective.</p><p>Now, for <b>../data/church.png</b> because the above observation holds true, therefore we see no effect. for RGB images, the calculation is done by passing via each channel.</p><pre class="codeinput">tic;
+
+myLinearContrastStretching(<span class="string">'barbara'</span>,<span class="string">'../data/barbara.png'</span>); <span class="comment">% 1</span>
+myLinearContrastStretching(<span class="string">'TEM'</span>,<span class="string">'../data/TEM.png'</span>); <span class="comment">% 2</span>
+myLinearContrastStretching(<span class="string">'canyon'</span>, <span class="string">'../data/canyon.png'</span>); <span class="comment">% 3</span>
+myLinearContrastStretching(<span class="string">'church'</span>,<span class="string">'../data/church.png'</span>); <span class="comment">% 4</span>
+myLinearContrastStretching(<span class="string">'retina'</span>, <span class="string">'../data/retina.png'</span>)
+
+toc;
+</pre><img vspace="5" hspace="5" src="myMainScript_01.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_02.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_03.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_04.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_05.png" alt=""> <h2 id="3">Histogram Equalization</h2><p>For converting histogram of an Image to  Uniform Distribution . The Pseudo code is:</p><pre>   For each channel of the image
+     channelHistogram = Calculate Histogram of (channel)
+     pmf = Calculate pmf of (channelHistogram)
+     cdf = Cumulative Sum(pmf)
+     For each pixel px in channel
+        new_px =cdf(px) * 255
+     End
+   End</pre><p><b>observation</b> After applying on <b>../data/church.png</b>, we can see that the building structure (window, bricks) of church and neighbouring buildings could be seen clearly.</p><p>Because Linear contrast streching is unreliable if the minimum and maximum pixel values are 0 and 255. Having no effect as a result.</p><p>Histogram Equilisation uses probability mass funtion. Normalization is nonlinear here, which spreads the area of pixels with high intensities, and compresses area of pixels with low intesity value.</p><p>Hence, Histogram Equilization is preferred over simple contrast stretching.</p><pre class="codeinput">tic;
+myHE(<span class="string">'barbara'</span>,<span class="string">'../data/barbara.png'</span>,1); <span class="comment">% 1</span>
+myHE(<span class="string">'TEM'</span>,<span class="string">'../data/TEM.png'</span>,1); <span class="comment">% 2</span>
+myHE(<span class="string">'canyon'</span>, <span class="string">'../data/canyon.png'</span>,1); <span class="comment">% 3</span>
+myHE(<span class="string">'church'</span>,<span class="string">'../data/church.png'</span>,1); <span class="comment">% 4</span>
+myHE(<span class="string">'retina'</span>, <span class="string">'../data/retina.png'</span>,1) <span class="comment">% 5</span>
+toc;
+</pre><img vspace="5" hspace="5" src="myMainScript_06.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_07.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_08.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_09.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_10.png" alt=""> <h2 id="4">Histogram Matching</h2><p>Sometimes, we might not want to do Histogram Equilisation, instead match the histogram of given image to the histogram of a reference image(NOT uniform).</p><p><b>Observation</b>  For <b>../data/retina.png</b>  The difference b/w histogram equilized and histogram matching output  can be observed from the following plottings. Histogram Equirization  results in uniform intensities, which in this cases results in clear  veins view, but the other regions are affected.  Now, in case of Histogram matching, which could be required for standard  viewing of image in some cases e.g Medical, We get resulting image to be  closer to the reference image.</p><pre class="codeinput">tic;
+myHM(<span class="string">'../data/retina.png'</span>, <span class="string">'../data/retinaMask.png'</span>, <span class="string">'../data/retinaRef.png'</span>, <span class="string">'../data/retinaRefMask.png'</span>);
+toc;
+</pre><img vspace="5" hspace="5" src="myMainScript_11.png" alt=""> <h2 id="5">Adaptive Histogram Equilization</h2><pre>AHE is localised adaptive equilization around a pixel. Region around the
+pixel is controlled by window size.
+As the window size gets lower the low intensities are enhanced, this
+also results in enhancement of noise.</pre><pre>Algorithm: (ref:  slides by Prof. Suyash)
+    Let windows size = n
+    For each pixel p
+       construct window of size nxn
+       perform histogram equilization within that window
+           1) computer histogram within that window
+           2) computer the CDF within window
+           3) Map intensity of center pixel "p" based on CDF</pre><pre class="codeinput">tic;
+myAHE(5,<span class="string">'barbara'</span>,<span class="string">'../data/barbara.png'</span>); <span class="comment">% 1</span>
+myAHE(50,<span class="string">'barbara'</span>,<span class="string">'../data/barbara.png'</span>); <span class="comment">% 1</span>
+myAHE(200,<span class="string">'barbara'</span>,<span class="string">'../data/barbara.png'</span>); <span class="comment">% 1</span>
+
+myAHE(5,<span class="string">'TEM'</span>,<span class="string">'../data/TEM.png'</span>); <span class="comment">% 2</span>
+myAHE(50,<span class="string">'TEM'</span>,<span class="string">'../data/TEM.png'</span>); <span class="comment">% 2</span>
+myAHE(200,<span class="string">'TEM'</span>,<span class="string">'../data/TEM.png'</span>); <span class="comment">% 2</span>
+
+myAHE(5,<span class="string">'canyon'</span>, <span class="string">'../data/canyon.png'</span>); <span class="comment">% 3</span>
+myAHE(50,<span class="string">'canyon'</span>, <span class="string">'../data/canyon.png'</span>); <span class="comment">% 3</span>
+myAHE(200,<span class="string">'canyon'</span>, <span class="string">'../data/canyon.png'</span>); <span class="comment">% 3</span>
+
+toc;
+</pre><img vspace="5" hspace="5" src="myMainScript_12.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_13.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_14.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_15.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_16.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_17.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_18.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_19.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_20.png" alt=""> <h2 id="6">Contrast Limited Adaptive Histogram Equilization</h2><pre>Source: slides Prof. Suyash's
+CLAHE is different from AHE in the sense that the amplification of pixel
+is limited by:
+     1) Clip the histogram at predefined value
+     2) Redistribute the mass uniformly throughout the range
+     3) then,Compute the CDF</pre><pre class="codeinput">tic;
+
+myCLAHE(.01, 50 ,<span class="string">'barbara'</span>,<span class="string">'../data/barbara.png'</span>); <span class="comment">% 1</span>
+myCLAHE(.005, 50 ,<span class="string">'barbara'</span>,<span class="string">'../data/barbara.png'</span>); <span class="comment">% 1</span>
+
+myCLAHE(.01, 50 ,<span class="string">'TEM'</span>,<span class="string">'../data/TEM.png'</span>); <span class="comment">% 2</span>
+myCLAHE(.005, 50 ,<span class="string">'TEM'</span>,<span class="string">'../data/TEM.png'</span>); <span class="comment">% 2</span>
+
+myCLAHE(.01, 50,<span class="string">'canyon'</span>, <span class="string">'../data/canyon.png'</span>); <span class="comment">% 3</span>
+myCLAHE(.005,50,<span class="string">'canyon'</span>, <span class="string">'../data/canyon.png'</span>); <span class="comment">% 3</span>
+
+toc;
+</pre><img vspace="5" hspace="5" src="myMainScript_21.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_22.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_23.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_24.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_25.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_26.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Question 2 Gray Level Transformations
+%% Linear Contrast Stretching
+% The function myLinearContrastStretching(fname, path) implements contrast 
+% stretching by stretching the histogram of  image over 0 to 255.
+%
+% Both single channel ( Grayscale ) and three channel ( RGB ) images can be
+% given as input image.
+%
+% *The transformation function for each pixel is as follows: *
+%%
+% 
+%  newValue = [(oldValue - minValue)/(maxValue - minValue) ]*255
+% 
+%
+%
+% *Observations*
+% For Linear Contrast Strectching, if pixel values of image contains  
+% 0 and 255, then apllication of above function has no effect, because the
+% denominator becomes 255 and we are multiplying by 255. Thus, its
+% canceled. In such cases Linear Contrast Streching is ineffective.
+%
+% Now, for *../data/church.png* because the above observation holds true,
+% therefore we see no effect.
+% for RGB images, the calculation is done by passing via each channel.
+
+tic;
+
+myLinearContrastStretching('barbara','../data/barbara.png'); % 1
+myLinearContrastStretching('TEM','../data/TEM.png'); % 2
+myLinearContrastStretching('canyon', '../data/canyon.png'); % 3
+myLinearContrastStretching('church','../data/church.png'); % 4
+myLinearContrastStretching('retina', '../data/retina.png')
+
+toc;
+
+
+%% Histogram Equalization
+% For converting histogram of an Image to  Uniform Distribution .  
+% The Pseudo code is:
+%     
+%     For each channel of the image
+%       channelHistogram = Calculate Histogram of (channel)
+%       pmf = Calculate pmf of (channelHistogram)
+%       cdf = Cumulative Sum(pmf)
+%       For each pixel px in channel
+%          new_px =cdf(px) * 255
+%       End
+%     End
+%
+%
+% *observation*
+% After applying on *../data/church.png*, we can see that the building
+% structure (window, bricks) of church and neighbouring buildings could be 
+% seen clearly. 
+% 
+% 
+% Because Linear contrast streching is unreliable if the minimum and
+% maximum pixel values are 0 and 255. Having no effect as a result.
+%
+% Histogram Equilisation uses probability mass funtion. Normalization
+% is nonlinear here, which spreads the area of pixels with high
+% intensities, and compresses area of pixels with low intesity value.
+%
+% Hence, Histogram Equilization is preferred over simple contrast stretching.
+
+
+tic;
+myHE('barbara','../data/barbara.png',1); % 1
+myHE('TEM','../data/TEM.png',1); % 2
+myHE('canyon', '../data/canyon.png',1); % 3
+myHE('church','../data/church.png',1); % 4
+myHE('retina', '../data/retina.png',1) % 5
+toc;
+
+
+%% Histogram Matching
+% Sometimes, we might not want to do Histogram Equilisation, instead 
+% match the histogram of given image to the histogram of a reference image(NOT uniform).
+%
+% *Observation*  
+%  For *../data/retina.png*
+%  The difference b/w histogram equilized and histogram matching output
+%  can be observed from the following plottings. Histogram Equirization
+%  results in uniform intensities, which in this cases results in clear
+%  veins view, but the other regions are affected.
+%  Now, in case of Histogram matching, which could be required for standard
+%  viewing of image in some cases e.g Medical, We get resulting image to be
+%  closer to the reference image.
+%  
+
+tic;
+myHM('../data/retina.png', '../data/retinaMask.png', '../data/retinaRef.png', '../data/retinaRefMask.png');
+toc;
+
+
+%% Adaptive Histogram Equilization
+%  AHE is localised adaptive equilization around a pixel. Region around the
+%  pixel is controlled by window size.   
+%  As the window size gets lower the low intensities are enhanced, this
+%  also results in enhancement of noise.
+%  
+%  Algorithm: (ref:  slides by Prof. Suyash)
+%      Let windows size = n
+%      For each pixel p
+%         construct window of size nxn
+%         perform histogram equilization within that window
+%             1) computer histogram within that window
+%             2) computer the CDF within window
+%             3) Map intensity of center pixel "p" based on CDF
+%
+
+tic;
+myAHE(5,'barbara','../data/barbara.png'); % 1
+myAHE(50,'barbara','../data/barbara.png'); % 1
+myAHE(200,'barbara','../data/barbara.png'); % 1
+
+myAHE(5,'TEM','../data/TEM.png'); % 2
+myAHE(50,'TEM','../data/TEM.png'); % 2
+myAHE(200,'TEM','../data/TEM.png'); % 2
+
+myAHE(5,'canyon', '../data/canyon.png'); % 3
+myAHE(50,'canyon', '../data/canyon.png'); % 3
+myAHE(200,'canyon', '../data/canyon.png'); % 3
+
+toc;
+
+%% Contrast Limited Adaptive Histogram Equilization
+%  Source: slides Prof. Suyash's 
+%  CLAHE is different from AHE in the sense that the amplification of pixel
+%  is limited by:
+%       1) Clip the histogram at predefined value
+%       2) Redistribute the mass uniformly throughout the range
+%       3) then,Compute the CDF
+%
+%
+
+tic;
+
+myCLAHE(.01, 50 ,'barbara','../data/barbara.png'); % 1
+myCLAHE(.005, 50 ,'barbara','../data/barbara.png'); % 1
+
+myCLAHE(.01, 50 ,'TEM','../data/TEM.png'); % 2
+myCLAHE(.005, 50 ,'TEM','../data/TEM.png'); % 2
+
+myCLAHE(.01, 50,'canyon', '../data/canyon.png'); % 3
+myCLAHE(.005,50,'canyon', '../data/canyon.png'); % 3
+
+toc;
+
+
+
+
+##### SOURCE END #####
+--></body></html>

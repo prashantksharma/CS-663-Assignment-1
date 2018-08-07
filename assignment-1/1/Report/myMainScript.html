@@ -1,0 +1,269 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Question 1 Image Resizing</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-08-07"><meta name="DC.source" content="myMainScript.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Question 1 Image Resizing</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Image Shrinking by Factor D</a></li><li><a href="#2">Image Enlargement Using Biliniear Interpolation</a></li><li><a href="#3">Image Enlargement using Nearest-Neighbor Interpolation</a></li></ul></div><h2 id="1">Image Shrinking by Factor D</h2><p>Here the Images are shrinked by a factor of D . To Shrink an Image the process is as follows:-   1) Load the image into a matrix.   2) Rows in the new image are obtained by including every dth row beginning from 1   3) Cols in the new image are obtained by including every dth col beginning from 1     The Moire can be clearly visibile in the shirnked by 2 and shirnked by 3     Image .</p><pre class="codeinput">tic;
+<span class="comment">% Question 1.A  Image Shrinking</span>
+im = imread(<span class="string">'../data/circles_concentric.png'</span>);
+circles_shrinked_by_2 = myShrinkImageByFactorD(im,2);
+imwrite(circles_shrinked_by_2, <span class="string">'../images/circles_shrinked_by_2.png'</span>);
+circles_shrinked_by_3 = myShrinkImageByFactorD(im,3);
+imwrite(circles_shrinked_by_3, <span class="string">'../images/circles_shrinked_by_3.png'</span>);
+figure;
+colormap(gray(256));
+image(im)
+title(<span class="string">'Original Image'</span>)
+axis <span class="string">image</span>;
+colorbar;
+set(gcf, <span class="string">'Units'</span>, <span class="string">'Normalized'</span>, <span class="string">'OuterPosition'</span>, [0 0 1 1]);
+figure;
+colormap(gray(256));
+subplot(1,2,1),image(circles_shrinked_by_2)
+title(<span class="string">'Factor 2'</span>)
+axis <span class="string">image</span>
+colorbar;
+subplot(1,2,2),image(circles_shrinked_by_3)
+title(<span class="string">'Factor 3'</span>)
+axis <span class="string">image</span>
+colorbar;
+set(gcf, <span class="string">'Units'</span>, <span class="string">'Normalized'</span>, <span class="string">'OuterPosition'</span>, [0 0 1 1]);
+toc;
+</pre><pre class="codeoutput">Elapsed time is 0.273177 seconds.
+</pre><img vspace="5" hspace="5" src="myMainScript_01.png" alt=""> <img vspace="5" hspace="5" src="myMainScript_02.png" alt=""> <h2 id="2">Image Enlargement Using Biliniear Interpolation</h2><p>Here we consider for our image the number of rows as M and the number of columns as N .Resize the image to have the number of rows = 3M-2 and Number of columns 2N-1</p><p>for understanding bilinear interpolation we have referred to Vanderbilt University School of Engineering's slides https://ia802707.us.archive.org/23/items/Lectures_on_Image_Processing/EECE_4353_15_Resampling.pdf Algorithm is on page number 59.</p><p>Here to Achieve Bilinear Interpolation we do the following       Let I be an R x C image.       Let J be resulting image with size 3M-2 and 2N-1 i.e. R' x C' with       pixel locs (r' , c')</p><pre>     Let S_R be R/R'
+     Let S_C be C/C'
+     Let r_f be equal to r'.S_R
+     Let c_f be equal to c'.S_C
+     Let r_o be [r_f] and c_o be [c_f]
+     Let delta_r be difference between r_f and r_o
+     Let delta_c be difference between c_f and c_o
+     Then J(r',c') = I(r_o,c_o).(1-delta_r).(1-delta_c)
+     + I(r_o + 1,c_o).(delta_r).(1-delta_c) + I(r_o,c_o + 1).(1-delta_r).(delta_c)
+     + I(r_o + 1,c_o + 1).(delta_r).(delta_c)</pre><pre class="codeinput">tic;
+<span class="comment">% Question 1.B Bilinear Interpolation</span>
+im=imread(<span class="string">'../data/barbaraSmall.png'</span>);
+resized=myBilinearInterpolation(im);
+figure
+colormap(gray(256));
+subplot(1,2,1),image(im)
+axis <span class="string">image</span>
+title(<span class="string">'Original Image'</span>)
+subplot(1,2,2),image(resized)
+title(<span class="string">'Resized Image'</span>)
+axis <span class="string">image</span>
+truesize;
+imwrite(resized,<span class="string">'../images/barbaraBig_bilinear.png'</span>);
+set(gcf, <span class="string">'Units'</span>, <span class="string">'Normalized'</span>, <span class="string">'OuterPosition'</span>, [0 0 1 1]);
+toc;
+</pre><pre class="codeoutput">Elapsed time is 0.127478 seconds.
+</pre><img vspace="5" hspace="5" src="myMainScript_03.png" alt=""> <h2 id="3">Image Enlargement using Nearest-Neighbor Interpolation</h2><p>Here we consider for our image the number of rows as M and the number of columns as N .Resize the image to have the number of rows = 3M-2 and Number of columns 2N-1</p><p>Here We will achive the enlargement using nearest neighbor for the unknown pixel values .</p><p>The process followed here is simple</p><pre>     Output image is of size 3M-2,2N-1
+     Compute scale factor for the output image
+     Compute an upsampled set of indices:
+     row_Index = min(round(((1:M)-0.5)./scale_rows + 0.5),M)
+     col_Index = min(round(((1:N)-0.5)./scale_cols + 0.5),N)</pre><pre>     Index old image to get new image:</pre><pre>     outputImage = inputImage(row_Index,col_Index,:);</pre><pre class="codeinput">tic;
+<span class="comment">% Question 1.C Nearest Neighbor Interpolation</span>
+im=imread(<span class="string">'../data/barbaraSmall.png'</span>);
+resized=myNearestNeighborInterpolation(im);
+figure
+colormap(gray(256));
+subplot(1,2,1),image(im)
+axis <span class="string">image</span>
+title(<span class="string">'Original Image'</span>)
+subplot(1,2,2),image(resized)
+title(<span class="string">'Resized Image'</span>)
+axis <span class="string">image</span>
+imwrite(resized,<span class="string">'../images/barbaraBig_nearest.png'</span>);
+truesize
+set(gcf, <span class="string">'Units'</span>, <span class="string">'Normalized'</span>, <span class="string">'OuterPosition'</span>, [0 0 1 1]);
+toc;
+</pre><pre class="codeoutput">Elapsed time is 0.124407 seconds.
+</pre><img vspace="5" hspace="5" src="myMainScript_04.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Question 1 Image Resizing
+
+%% Image Shrinking by Factor D 
+% Here the Images are shrinked by a factor of D . To Shrink an Image the
+% process is as follows:-
+%   1) Load the image into a matrix.
+%   2) Rows in the new image are obtained by including every dth row beginning from 1
+%   3) Cols in the new image are obtained by including every dth col beginning from 1
+%     The Moire can be clearly visibile in the shirnked by 2 and shirnked by 3
+%     Image .
+tic;
+% Question 1.A  Image Shrinking
+im = imread('../data/circles_concentric.png');
+circles_shrinked_by_2 = myShrinkImageByFactorD(im,2);
+imwrite(circles_shrinked_by_2, '../images/circles_shrinked_by_2.png');
+circles_shrinked_by_3 = myShrinkImageByFactorD(im,3);
+imwrite(circles_shrinked_by_3, '../images/circles_shrinked_by_3.png');
+figure;
+colormap(gray(256));
+image(im)
+title('Original Image')
+axis image;
+colorbar;
+set(gcf, 'Units', 'Normalized', 'OuterPosition', [0 0 1 1]);
+figure;
+colormap(gray(256));
+subplot(1,2,1),image(circles_shrinked_by_2)
+title('Factor 2')
+axis image
+colorbar;
+subplot(1,2,2),image(circles_shrinked_by_3)
+title('Factor 3')
+axis image
+colorbar;
+set(gcf, 'Units', 'Normalized', 'OuterPosition', [0 0 1 1]);
+toc;
+
+
+%% Image Enlargement Using Biliniear Interpolation
+% Here we consider for our image the number of rows as M and the number of 
+% columns as N .Resize the image to have the number of rows = 3M-2 and 
+% Number of columns 2N-1
+%
+%
+% for understanding bilinear interpolation we have referred
+% to Vanderbilt University School of Engineering's slides
+% https://ia802707.us.archive.org/23/items/Lectures_on_Image_Processing/EECE_4353_15_Resampling.pdf
+% Algorithm is on page number 59.
+%
+%
+% Here to Achieve Bilinear Interpolation we do the following 
+%       Let I be an R x C image.
+%       Let J be resulting image with size 3M-2 and 2N-1 i.e. R' x C' with
+%       pixel locs (r' , c')
+% 
+%       Let S_R be R/R'
+%       Let S_C be C/C'    
+%       Let r_f be equal to r'.S_R
+%       Let c_f be equal to c'.S_C
+%       Let r_o be [r_f] and c_o be [c_f]
+%       Let delta_r be difference between r_f and r_o
+%       Let delta_c be difference between c_f and c_o
+%       Then J(r',c') = I(r_o,c_o).(1-delta_r).(1-delta_c) 
+%       + I(r_o + 1,c_o).(delta_r).(1-delta_c) + I(r_o,c_o + 1).(1-delta_r).(delta_c)
+%       + I(r_o + 1,c_o + 1).(delta_r).(delta_c)
+
+tic;
+% Question 1.B Bilinear Interpolation
+im=imread('../data/barbaraSmall.png');
+resized=myBilinearInterpolation(im);
+figure
+colormap(gray(256));
+subplot(1,2,1),image(im)
+axis image
+title('Original Image')
+subplot(1,2,2),image(resized)
+title('Resized Image')
+axis image
+truesize;
+imwrite(resized,'../images/barbaraBig_bilinear.png');
+set(gcf, 'Units', 'Normalized', 'OuterPosition', [0 0 1 1]);
+toc;
+
+%% Image Enlargement using Nearest-Neighbor Interpolation
+% Here we consider for our image the number of rows as M and the number of 
+% columns as N .Resize the image to have the number of rows = 3M-2 and 
+% Number of columns 2N-1
+%
+% Here We will achive the enlargement using nearest neighbor for the
+% unknown pixel values .
+%
+% The process followed here is simple 
+%
+%       Output image is of size 3M-2,2N-1
+%       Compute scale factor for the output image
+%       Compute an upsampled set of indices:
+%       row_Index = min(round(((1:M)-0.5)./scale_rows + 0.5),M)
+%       col_Index = min(round(((1:N)-0.5)./scale_cols + 0.5),N)
+% 
+%       Index old image to get new image:
+% 
+%       outputImage = inputImage(row_Index,col_Index,:);
+% 
+
+tic;
+% Question 1.C Nearest Neighbor Interpolation
+im=imread('../data/barbaraSmall.png');
+resized=myNearestNeighborInterpolation(im);
+figure
+colormap(gray(256));
+subplot(1,2,1),image(im)
+axis image
+title('Original Image')
+subplot(1,2,2),image(resized)
+title('Resized Image')
+axis image
+imwrite(resized,'../images/barbaraBig_nearest.png');
+truesize
+set(gcf, 'Units', 'Normalized', 'OuterPosition', [0 0 1 1]);
+toc;
+
+
+
+##### SOURCE END #####
+--></body></html>
